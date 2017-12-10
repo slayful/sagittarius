@@ -1,11 +1,14 @@
 # sagittarius
 
-An attempt at implementing a date and time library for pony as suggested in
+An attempt at implementing a date and time library for pony as suggested in this [ponyc issue](https://github.com/ponylang/ponyc/issues/1902#issuecomment-302221252).
 
-Inspirations:
+## Inspirations
 - https://docs.rs/chrono/0.3.1/chrono/
 - https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md
 - http://www.joda.org/joda-time/
+
+## Name explained
+Time -> chrono -> [Chronos](https://en.wikipedia.org/wiki/Chronos) ->  as a man turning the Zodiac Wheel -> Saggitarius = half man half pony
 
 ## Status
 
