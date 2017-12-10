@@ -4,7 +4,7 @@
 
 ## Status
 
-[![Build Status](https://travis-ci.org/{USERNAME}/sagittarius.svg?branch=master)](https://travis-ci.org/{USERNAME}/sagittarius)
+[![Build Status](https://travis-ci.org/slayful/sagittarius.svg?branch=master)](https://travis-ci.org/slayful/sagittarius)
 
 {PROJECT_STATUS}
 
@@ -16,7 +16,7 @@
 ```json
 { 
   "type": "github",
-  "repo": "{USERNAME}/sagittarius"
+  "repo": "slayful/sagittarius"
 }
 ```
 
