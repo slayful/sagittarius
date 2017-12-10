@@ -21,5 +21,5 @@
 ```
 
 * `stable fetch` to fetch your dependencies
-* `use "{PACKAGE}"` to include this package
+* `use "sagittarius"` to include this package
 * `stable env ponyc` to compile your application

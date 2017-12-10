@@ -1,11 +1,11 @@
-build/{PACKAGE}: build {PACKAGE}/*.pony
-	ponyc {PACKAGE} -o build --debug
+build/sagittarius: build sagittarius/*.pony
+	ponyc sagittarius -o build --debug
 
 build:
 	mkdir build
 
-test: build/{PACKAGE}
-	build/{PACKAGE}
+test: build/sagittarius
+	build/sagittarius
 
 clean:
 	rm -rf build
