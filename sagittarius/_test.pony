@@ -14,13 +14,23 @@ class iso _TestDuration is UnitTest
 
   fun apply(h: TestHelper) =>
     let four_hundred_millis = Duration.from_millis(400)
-    h.assert_eq[ULong](400, four_hundred_millis.get_millis())
+    h.assert_eq[ILong](400, four_hundred_millis.get_millis())
 
     let three_hundred_milis = Duration.from_millis(300)
-    h.assert_eq[ULong](300, three_hundred_milis.get_millis())
+    h.assert_eq[ILong](300, three_hundred_milis.get_millis())
 
-    let sum = four_hundred_millis.plus(three_hundred_milis)
-    h.assert_eq[ULong](700, sum.get_millis())
+    // sum of two Durations
+    let sum = four_hundred_millis + (three_hundred_milis)
+    h.assert_eq[ILong](700, sum.get_millis())
 
-    let diff = four_hundred_millis.minus(three_hundred_milis)
-    h.assert_eq[ULong](100, diff.get_millis())
+    // positive difference
+    let diff = four_hundred_millis - (three_hundred_milis)
+    h.assert_eq[ILong](100, diff.get_millis())
+
+    // negative difference
+    let negative_diff = three_hundred_milis - (four_hundred_millis)
+    h.assert_eq[ILong](-100, negative_diff.get_millis())
+
+    // negative difference
+    let minus_one_hundred_milis = Duration.from_millis(-100)
+    h.assert_eq[Duration](minus_one_hundred_milis, negative_diff)
