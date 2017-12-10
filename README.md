@@ -1,10 +1,10 @@
-# {REPO}
+# sagittarius
 
 {PROJECT_DESCRIPTION}
 
 ## Status
 
-[![Build Status](https://travis-ci.org/{USERNAME}/{REPO}.svg?branch=master)](https://travis-ci.org/{USERNAME}/{REPO})
+[![Build Status](https://travis-ci.org/{USERNAME}/sagittarius.svg?branch=master)](https://travis-ci.org/{USERNAME}/sagittarius)
 
 {PROJECT_STATUS}
 
@@ -16,7 +16,7 @@
 ```json
 { 
   "type": "github",
-  "repo": "{USERNAME}/{REPO}"
+  "repo": "{USERNAME}/sagittarius"
 }
 ```
 
