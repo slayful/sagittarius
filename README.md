@@ -1,12 +1,17 @@
 # sagittarius
 
-{PROJECT_DESCRIPTION}
+An attempt at implementing a date and time library for pony as suggested in
+
+Inspirations:
+- https://docs.rs/chrono/0.3.1/chrono/
+- https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md
+- http://www.joda.org/joda-time/
 
 ## Status
 
 [![Build Status](https://travis-ci.org/slayful/sagittarius.svg?branch=master)](https://travis-ci.org/slayful/sagittarius)
 
-{PROJECT_STATUS}
+WORK IN PROGRESS
 
 ## Installation
 
@@ -14,7 +19,7 @@
 * Update your `bundle.json`
 
 ```json
-{ 
+{
   "type": "github",
   "repo": "slayful/sagittarius"
 }
