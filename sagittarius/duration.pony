@@ -6,10 +6,11 @@ class val Duration is (Equatable[Duration] & Stringable)
       _milliseconds = milliseconds
 
   fun string(): String iso^ =>
-    let str = recover
-      "Duration of " + _milliseconds.string() + " milliseconds."
-    end
-    str.clone()
+    String.join([
+      "Duration of "
+      _milliseconds.string()
+      " milliseconds."
+    ].values())
 
   fun get_millis(): ILong val =>
     _milliseconds
