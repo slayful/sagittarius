@@ -34,3 +34,17 @@ class iso _TestDuration is UnitTest
     // negative difference
     let minus_one_hundred_milis = Duration.from_millis(-100)
     h.assert_eq[Duration](minus_one_hundred_milis, negative_diff)
+
+class iso _TestLocalDateTime is UnitTest
+  fun name(): String => "local_date_time"
+
+  fun apply(h: TestHelper) =>
+    // 1970-01-01T00:00:00
+    let zero_millis = LocalDateTime.from_millis(0)
+    h.assert_eq[I32](1970, zero_millis.year())
+    h.assert_eq[I32](1, zero_millis.month_of_year())
+    h.assert_eq[I32](1, zero_millis.day_of_month())
+    h.assert_eq[I32](1, zero_millis.hour_of_day())
+    h.assert_eq[I32](0, zero_millis.minute_of_hour())
+    h.assert_eq[I32](0, zero_millis.second_of_minute())
+    h.assert_eq[I32](0, zero_millis.millis_of_second())

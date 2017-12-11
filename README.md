@@ -14,12 +14,16 @@ Time -> chrono -> [Chronos](https://en.wikipedia.org/wiki/Chronos) ->  as a man 
 1. Durations
 1. Periods
 1. Instant
+1. Duration Fields
+1. Intervals
 1. Chronology
 1. LocalDateTime
 1. TimeZone
 1. DateTime
 1. DateTime maths
 1. Parsing and formatting ISO
+
+Pony standard library interoperability
 
 ## Status
 [![Build Status](https://travis-ci.org/slayful/sagittarius.svg?branch=master)](https://travis-ci.org/slayful/sagittarius)
