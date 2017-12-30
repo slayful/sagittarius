@@ -7,6 +7,7 @@ actor Main is TestList
 
 fun tag tests(test: PonyTest) =>
   test(_TestDuration)
+  test(_TestLocalDateTime)
 
 
 class iso _TestDuration is UnitTest
@@ -44,7 +45,7 @@ class iso _TestLocalDateTime is UnitTest
     h.assert_eq[I32](1970, zero_millis.year())
     h.assert_eq[I32](1, zero_millis.month_of_year())
     h.assert_eq[I32](1, zero_millis.day_of_month())
-    h.assert_eq[I32](1, zero_millis.hour_of_day())
+    h.assert_eq[I32](0, zero_millis.hour_of_day())
     h.assert_eq[I32](0, zero_millis.minute_of_hour())
     h.assert_eq[I32](0, zero_millis.second_of_minute())
     h.assert_eq[I32](0, zero_millis.millis_of_second())
