@@ -1,27 +1,30 @@
 class val LocalDateTime
 
-  let _instant: Instant val
+  let _date: LocalDate val
+  let _time: LocalTime val
 
-  new val from_millis(milliseconds: ILong val) =>
-    _instant = Instant.from_millis(milliseconds)
+  new from_millis(millis: I64 val) =>
+    //TODO
+    _date = LocalDate(1970, 1, 1)
+    _time = LocalTime(0, 0, 0, 0)
 
-  fun year(): I32 =>
-    1970
+  fun get_years(): I32 =>
+    _date.get_years()
 
-  fun month_of_year(): I32 =>
-    1
+  fun get_months(): I32 =>
+    _date.get_months()
 
-  fun day_of_month(): I32 =>
-    1
+  fun get_days(): I32 =>
+    _date.get_days()
 
-  fun hour_of_day(): I32 =>
-    0
+  fun get_hours(): I32 =>
+    _time.get_hours()
 
-  fun minute_of_hour(): I32 =>
-    0
+  fun get_minutes(): I32 =>
+    _time.get_minutes()
 
-  fun second_of_minute(): I32 =>
-    0
+  fun get_seconds(): I32 =>
+    _time.get_seconds()
 
-  fun millis_of_second(): I32 =>
-    0
+  fun get_nanos(): I32 =>
+    _time.get_nanos()

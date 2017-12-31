@@ -1,25 +1,46 @@
 class val Duration is (Equatable[Duration] & Stringable)
 
-  let _milliseconds: ILong val
+  let _seconds: I32 val
+  let _nanos: U32 val
 
-  new val from_millis(milliseconds: ILong val) =>
-      _milliseconds = milliseconds
+  new val create(seconds: I32 val, nanos: U32 val) =>
+    _seconds = seconds
+    _nanos = nanos
+
+  new val from_millis(millis: I64 val) =>
+    _seconds = I32.from[I64](millis / 1000)
+    _nanos = U32.from[I64]((millis % 1000) * 1000_000)
 
   fun string(): String iso^ =>
     String.join([
       "Duration of "
-      _milliseconds.string()
-      " milliseconds."
+      _seconds.string()
+      " seconds and "
+      _nanos.string()
+      " nanos."
     ].values())
 
-  fun millis(): ILong val =>
-    _milliseconds
+  fun get_seconds(): I32 val =>
+    _seconds
 
-  fun add(duration: Duration val): Duration val =>
-    Duration.from_millis(millis() + duration.millis())
+  fun get_nanos(): U32 val =>
+    _nanos
 
-  fun sub(duration: Duration val): Duration val =>
-    Duration.from_millis(millis() - duration.millis())
+  fun to_millis(): I64 val =>
+    TimeUtilities.seconds_and_nanos_to_millis(_seconds, _nanos)
+
+  fun add(that: Duration val): Duration val =>
+    Duration(
+      this.get_seconds() + that.get_seconds(),
+      this.get_nanos() + that.get_nanos()
+    )
+
+  fun sub(that: Duration val): Duration val =>
+    Duration(
+      this.get_seconds() - that.get_seconds(),
+      this.get_nanos() - that.get_nanos()
+    )
 
   fun box eq(that: Duration box): Bool val =>
-    this.millis() == that.millis()
+    (this.get_seconds() == that.get_seconds())
+    and (this.get_nanos() == that.get_nanos())
