@@ -8,9 +8,9 @@ class val Instant is (Equatable[Instant] & Stringable)
     _seconds = seconds
     _nanos = nanos
 
-  new val from_millis(millis: I64 val) =>
-    _seconds = I32.from[I64](millis / 1000)
-    _nanos = U32.from[I64]((millis % 1000) * 1000_000)
+  new val from_millis(millis: U32 val) =>
+    _seconds = millis.i32() / 1000
+    _nanos = (millis % 1000) * 1000_000
 
   fun string(): String iso^ =>
     String.join([
@@ -31,9 +31,9 @@ class val Instant is (Equatable[Instant] & Stringable)
     TimeUtilities.seconds_and_nanos_to_millis(_seconds, _nanos)
 
   fun add(duration: Duration val): Instant val =>
-    add_seconds_and_nanos(duration.get_seconds(), duration.get_nanos())
+    add_seconds_and_nanos(duration.get_seconds(), duration.get_nanos().i32())
 
-  fun add_seconds_and_nanos(seconds: I32, nanos: U32): Instant val =>
+  fun add_seconds_and_nanos(seconds: I32, nanos: I32): Instant val =>
     if (seconds == 0) and (nanos == 0) then
       // TODO just return this
       Instant(
@@ -41,16 +41,16 @@ class val Instant is (Equatable[Instant] & Stringable)
           get_nanos()
         )
     else
-      // TODO this won't be correct if nanos increase over seconds
+      let nanos_sum: I64 = this.get_nanos().i64() + nanos.i64()
       Instant(
-        get_seconds() + seconds,
-        get_nanos() + nanos
+        get_seconds() + seconds + (nanos_sum / NanosPerSecond().i64()).i32(),
+        // TODO this is wrong if nanos are negative
+        get_nanos() + nanos.u32() + (nanos_sum % NanosPerSecond().i64()).u32()
       )
     end
 
   fun sub(duration: Duration val): Instant val =>
-    // TODO this won't be correct if nanos become negative
-    add_seconds_and_nanos(-1 * duration.get_seconds(), -1 * duration.get_nanos())
+    add_seconds_and_nanos(-1 * duration.get_seconds(), -1 * duration.get_nanos().i32())
 
   fun box eq(that: Instant box): Bool val =>
     (this.get_seconds() == that.get_seconds())
