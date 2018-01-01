@@ -8,8 +8,14 @@ class val Duration is (Equatable[Duration] & Stringable)
     _nanos = nanos
 
   new val from_millis(millis: I64 val) =>
-    _seconds = I32.from[I64](millis / 1000)
-    _nanos = U32.from[I64]((millis % 1000) * 1000_000)
+    let nanos_adjustment = millis % MillisPerSecond().i64()
+    if nanos_adjustment < 0 then
+      _seconds = (millis / MillisPerSecond().i64()).i32() - 1
+      _nanos = (nanos_adjustment + MillisPerSecond().i64()).u32() * NanosPerMilli().u32()
+    else
+      _seconds = (millis / MillisPerSecond().i64()).i32()
+      _nanos = nanos_adjustment.u32() * NanosPerMilli().u32()
+    end
 
   fun string(): String iso^ =>
     String.join([

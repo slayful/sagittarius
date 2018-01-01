@@ -6,33 +6,56 @@ actor Main is TestList
 
 fun tag tests(test: PonyTest) =>
   test(_TestDuration)
+  test(_TestInstant)
   test(_TestLocalDateTime)
 
 class iso _TestDuration is UnitTest
   fun name(): String => "duration"
 
   fun apply(h: TestHelper) =>
-    let four_hundred_millis = Duration.from_millis(400)
-    h.assert_eq[I64](400, four_hundred_millis.to_millis())
-
-    let three_hundred_milis = Duration.from_millis(300)
-    h.assert_eq[I64](300, three_hundred_milis.to_millis())
+    h.assert_eq[I64](400, Duration.from_millis(400).to_millis())
+    h.assert_eq[I64](300, Duration.from_millis(300).to_millis())
+    h.assert_eq[I64](-100, Duration.from_millis(-100).to_millis())
 
     // sum of two Durations
-    let sum = four_hundred_millis + (three_hundred_milis)
+    let sum = Duration.from_millis(400) + Duration.from_millis(300)
     h.assert_eq[I64](700, sum.to_millis())
 
     // positive difference
-    let diff = four_hundred_millis - (three_hundred_milis)
+    let diff = Duration.from_millis(400) - Duration.from_millis(300)
     h.assert_eq[I64](100, diff.to_millis())
 
     // negative difference
-    let negative_diff = three_hundred_milis - (four_hundred_millis)
+    let negative_diff = Duration.from_millis(300) - Duration.from_millis(400)
     h.assert_eq[I64](-100, negative_diff.to_millis())
 
+class iso _TestInstant is UnitTest
+  fun name(): String => "instant"
+
+  fun apply(h: TestHelper) =>
+    h.assert_eq[I64](MillisPerSecond().i64(), Instant(1, 0).to_millis())
+    h.assert_eq[I64](MillisPerSecond().i64() * 10, Instant(10, 0).to_millis())
+    h.assert_eq[I64](1, Instant(0, NanosPerMilli().u32()).to_millis())
+
+    // positive value
+    h.assert_eq[I64](400, Instant.from_millis(400).to_millis())
+    // negative value
+    h.assert_eq[I64](-100, Instant.from_millis(-100).to_millis())
+
+    // sum of Instance and Duration
+    let sum = Instant.from_millis(400) + Duration.from_millis(300)
+    h.assert_eq[I64](700, sum.to_millis())
+
+    // positive difference
+    let diff = Instant.from_millis(400) - Duration.from_millis(300)
+    h.assert_eq[I64](100, diff.to_millis())
+
     // negative difference
-    let minus_one_hundred_milis = Duration.from_millis(-100)
-    h.assert_eq[Duration](minus_one_hundred_milis, negative_diff)
+    let negative_diff = Instant.from_millis(300) - Duration.from_millis(400)
+    h.log(negative_diff.get_seconds().string())
+    h.log(negative_diff.get_nanos().string())
+    h.assert_eq[I64](-100, negative_diff.to_millis())
+
 
 class iso _TestLocalDateTime is UnitTest
   fun name(): String => "local_date_time"
