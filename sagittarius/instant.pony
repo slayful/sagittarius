@@ -1,70 +1,46 @@
 class val Instant is (Equatable[Instant] & Stringable)
 
-  /** The values since 1970-01-01T00:00:00Z */
-  let _seconds: I32 val
-  let _nanos: U32 val
+  /** Duration since 1970-01-01:00:00:00 */
+  let _duration : Duration val
 
   new val create(seconds: I32 val, nanos: U32 val) =>
-    _seconds = seconds
-    _nanos = nanos
+    _duration = Duration(seconds, nanos)
 
   new val from_millis(millis: I64 val) =>
-    let nanos_adjustment = millis % MillisPerSecond().i64()
-    if nanos_adjustment < 0 then
-      _seconds = (millis / MillisPerSecond().i64()).i32() - 1
-      _nanos = (nanos_adjustment + MillisPerSecond().i64()).u32() * NanosPerMilli().u32()
-    else
-      _seconds = (millis / MillisPerSecond().i64()).i32()
-      _nanos = nanos_adjustment.u32() * NanosPerMilli().u32()
-    end
+    _duration = Duration.from_millis(millis)
+
+  new val from_duration(data: Duration val) =>
+    _duration = data
 
   fun string(): String iso^ =>
     String.join([
       "Instance of "
-      _seconds.string()
+      get_seconds().string()
       " seconds and "
-      _nanos.string()
+      get_nanos().string()
       " nanoseconds since 1970-01-01T00:00:00Z."
     ].values())
 
   fun get_seconds(): I32 val =>
-    _seconds
+    _duration.get_seconds()
 
   fun get_nanos(): U32 val =>
-    _nanos
+    _duration.get_nanos()
 
   fun to_millis(): I64 val =>
-    TimeUtilities.seconds_and_nanos_to_millis(_seconds, _nanos)
+    _duration.to_millis()
 
   fun add(duration: Duration val): Instant val =>
-    add_seconds_and_nanos(duration.get_seconds(), duration.get_nanos().i64())
+      Instant.from_duration(_duration.add(duration))
 
   fun add_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
-    if (seconds == 0) and (nanos == 0) then
-      // TODO just return this
-      Instant(
-          get_seconds(),
-          get_nanos()
-        )
-    else
-      let nanos_sum: I64 = get_nanos().i64() + nanos
-      let seconds_in_nanos: I64 = nanos_sum / NanosPerSecond().i64()
-      if nanos_sum < 0 then
-          Instant(
-            (get_seconds().i64() + seconds.i64() + (seconds_in_nanos.i64() - 1)).i32(),
-            (NanosPerSecond().i64() - (nanos_sum % NanosPerSecond().i64())).u32()
-          )
-        else
-          Instant(
-            get_seconds() + seconds + seconds_in_nanos.i32(),
-            (nanos_sum % NanosPerSecond().i64()).u32()
-          )
-      end
-
-    end
+      Instant.from_duration(_duration.add_seconds_and_nanos(seconds, nanos))
 
   fun sub(duration: Duration val): Instant val =>
-    add_seconds_and_nanos(-1 * duration.get_seconds(), -1 * duration.get_nanos().i64())
+    Instant.from_duration(_duration.sub(duration))
+
+  fun sub_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
+    Instant.from_duration(_duration.add_seconds_and_nanos(seconds, nanos))
 
   fun box eq(that: Instant box): Bool val =>
     (this.get_seconds() == that.get_seconds())
