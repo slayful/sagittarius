@@ -17,15 +17,6 @@ class val Duration is (Equatable[Duration] & Stringable)
       _nanos = nanos_adjustment.u32() * NanosPerMilli().u32()
     end
 
-  fun string(): String iso^ =>
-    String.join([
-      "Instance of "
-      get_seconds().string()
-      " seconds and "
-      get_nanos().string()
-      " nanoseconds."
-    ].values())
-
   fun get_seconds(): I32 val =>
     _seconds
 
@@ -78,3 +69,12 @@ class val Duration is (Equatable[Duration] & Stringable)
   fun box eq(that: Duration box): Bool val =>
     (this.get_seconds() == that.get_seconds())
     and (this.get_nanos() == that.get_nanos())
+
+  fun string(): String iso^ =>
+    String.join([
+      "Instance of "
+      get_seconds().string()
+      " seconds and "
+      get_nanos().string()
+      " nanoseconds."
+    ].values())

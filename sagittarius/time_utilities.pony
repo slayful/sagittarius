@@ -1,9 +1,24 @@
 use "time"
 
-primitive MillisPerSecond  fun apply(): U32 => 1_000
-primitive NanosPerSecond  fun apply(): U32 => 1_000_000_000
-primitive NanosPerMilli  fun apply(): U32 => 1_000_000
-primitive SecondsPerMinute  fun apply(): U16 => 60
+primitive MillisPerSecond fun apply(): U32 => 1_000
+primitive NanosPerSecond fun apply(): U32 => 1_000_000_000
+primitive NanosPerMilli fun apply(): U32 => 1_000_000
+primitive NanosPerMinute fun apply(): U32 => NanosPerSecond() * SecondsPerMinute().u32()
+primitive NanosPerHour fun apply(): U32 => NanosPerSecond() * SecondsPerHour().u32()
+primitive SecondsPerMinute fun apply(): U16 => 60
+primitive SecondsPerHour fun apply(): U16 => SecondsPerMinute() * MinutesPerHour()
+primitive MinutesPerHour fun apply(): U16 => 60
+primitive HoursPerDay fun apply(): U16 => 24
+primitive MinutesPerDay fun apply(): U16 => MinutesPerHour() * HoursPerDay()
+primitive SecondsPerDay fun apply(): U32 => SecondsPerMinute().u32() * MinutesPerDay().u32()
+
+/**
+  * The number of days from year zero to year 1970.
+  * There are five 400 year cycles from year zero to 2000.
+  * There are 7 leap years from 1970 to 2000.
+  */
+primitive DaysSinceEpoch fun apply(): U32 => (DaysPer400YearCycle() * 5) - ((30 * 365) + 7)
+primitive DaysPer400YearCycle fun apply(): U32 => 146097
 
 primitive TimeUtilities
 

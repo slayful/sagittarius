@@ -73,3 +73,6 @@ class iso _TestLocalDateTime is UnitTest
     h.assert_eq[I32](0, zero_millis.get_minutes())
     h.assert_eq[I32](0, zero_millis.get_seconds())
     h.assert_eq[I32](0, zero_millis.get_nanos())
+    h.assert_eq[String]("1970-01-01T00:00:00.000", zero_millis.string())
+
+    h.assert_eq[String]("1970-01-01T00:00:00.001", LocalDateTime.from_millis(1).string())
