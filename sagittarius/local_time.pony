@@ -10,7 +10,7 @@ class val LocalTime is (Equatable[LocalTime] & Stringable)
   new val from_nano_of_day(nanos_of_day: I64) =>
     // @printf[I32](("nanos_of_day " + nanos_of_day.string() + "\n").cstring())
     var nanos = nanos_of_day
-    _hours = (nanos / NanosPerHour().i64()).i32()
+    _hours = (nanos.u64() / NanosPerHour()).i32()
     nanos = nanos - (_hours.i64() * NanosPerHour().i64())
     _minutes = (nanos / NanosPerMinute().i64()).i32()
     nanos = nanos - (_minutes.i64() * NanosPerMinute().i64())
