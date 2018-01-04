@@ -1,9 +1,11 @@
 use "time"
 
 primitive MillisPerSecond fun apply(): U32 => 1_000
+primitive MillisPerMinute fun apply(): U32 => SecondsPerMinute().u32() * MillisPerSecond()
+primitive MillisPerHour fun apply(): U32 => MillisPerMinute() * MinutesPerHour().u32()
 primitive NanosPerSecond fun apply(): U32 => 1_000_000_000
 primitive NanosPerMilli fun apply(): U32 => 1_000_000
-primitive NanosPerMinute fun apply(): U32 => NanosPerSecond() * SecondsPerMinute().u32()
+primitive NanosPerMinute fun apply(): U64 => NanosPerSecond().u64() * SecondsPerMinute().u64()
 primitive NanosPerHour fun apply(): U64 => NanosPerSecond().u64() * SecondsPerHour().u64()
 primitive SecondsPerMinute fun apply(): U16 => 60
 primitive SecondsPerHour fun apply(): U16 => SecondsPerMinute() * MinutesPerHour()
