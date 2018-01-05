@@ -1,12 +1,3 @@
-
-primitive S
-  fun create_date_and_time(seconds: I64, nanos: U32): (LocalDate, LocalTime) =>
-    // @printf[I32](("seconds " + seconds.string() + "nanos " + nanos.string() + "\n").cstring())
-    let days = seconds / SecondsPerDay().i64()
-    let secondsOfDay = seconds % SecondsPerDay().i64()
-    let nanosOfDay = (secondsOfDay * NanosPerSecond().i64()) + nanos.i64()
-    (LocalDate.from_epoch_day(days), LocalTime.from_nano_of_day(nanosOfDay))
-
 class val LocalDateTime is (Equatable[LocalDateTime] & Stringable)
 
   let _date: LocalDate val
@@ -14,19 +5,26 @@ class val LocalDateTime is (Equatable[LocalDateTime] & Stringable)
 
   new val from_millis(millis: I64 val) =>
     let instant = Instant.from_millis(millis)
-    let d = S.create_date_and_time(instant.get_seconds().i64(), instant.get_nanos())
+    let d = _create_date_and_time(instant.get_seconds().i64(), instant.get_nanos())
     _date = d._1
     _time = d._2
 
   new val from_instant(instant: Instant) =>
-    let d = S.create_date_and_time(instant.get_seconds().i64(), instant.get_nanos())
+    let d = _create_date_and_time(instant.get_seconds().i64(), instant.get_nanos())
     _date = d._1
     _time = d._2
 
   new val from_epoch_seconds(seconds: I64 = 0, nanos: U32 = 0) =>
-    let d = S.create_date_and_time(seconds, nanos)
+    let d = _create_date_and_time(seconds, nanos)
     _date = d._1
     _time = d._2
+
+  fun tag _create_date_and_time(seconds: I64, nanos: U32): (LocalDate, LocalTime) =>
+    // @printf[I32](("seconds " + seconds.string() + "nanos " + nanos.string() + "\n").cstring())
+    let days = seconds / SecondsPerDay().i64()
+    let secondsOfDay = seconds % SecondsPerDay().i64()
+    let nanosOfDay = (secondsOfDay * NanosPerSecond().i64()) + nanos.i64()
+    (LocalDate.from_epoch_day(days), LocalTime.from_nano_of_day(nanosOfDay))
 
   fun get_years(): I32 =>
     _date.get_years()
