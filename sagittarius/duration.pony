@@ -3,7 +3,7 @@ class val Duration is (Equatable[Duration] & Stringable)
   let _seconds: I32 val
   let _nanos: U32 val
 
-  new val create(seconds: I32 val, nanos: U32 val) =>
+  new val create(seconds: I32 val = 0, nanos: U32 val = 0) =>
     _seconds = seconds
     _nanos = nanos
 
@@ -17,7 +17,7 @@ class val Duration is (Equatable[Duration] & Stringable)
       _nanos = nanos_adjustment.u32() * NanosPerMilli().u32()
     end
 
-  new val _create(seconds: I32, nanos: I64) =>
+  new val _create(seconds: I32 val, nanos: I64 val) =>
     if nanos >= 0 then
       _seconds = seconds
       _nanos = (nanos % NanosPerSecond().i64()).u32()

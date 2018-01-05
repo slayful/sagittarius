@@ -22,9 +22,9 @@ class val LocalDateTime is (Equatable[LocalDateTime] & Stringable)
   fun tag _create_date_and_time(seconds: I64, nanos: U32): (LocalDate, LocalTime) =>
     // @printf[I32](("seconds " + seconds.string() + "nanos " + nanos.string() + "\n").cstring())
     let days = seconds / SecondsPerDay().i64()
-    let secondsOfDay = seconds % SecondsPerDay().i64()
-    let nanosOfDay = (secondsOfDay * NanosPerSecond().i64()) + nanos.i64()
-    (LocalDate.from_epoch_day(days), LocalTime.from_nano_of_day(nanosOfDay))
+    let seconds_of_day = seconds % SecondsPerDay().i64()
+    let nanos_of_day = (seconds_of_day * NanosPerSecond().i64()) + nanos.i64()
+    (LocalDate.from_epoch_day(days), LocalTime.from_nano_of_day(nanos_of_day))
 
   fun get_years(): I32 =>
     _date.get_years()

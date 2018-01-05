@@ -30,7 +30,7 @@ class val Instant is (Equatable[Instant] & Stringable)
   fun to_millis(): I64 val =>
     _duration.to_millis()
 
-  fun val add_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
+  fun val add_seconds_and_nanos(seconds: I32 val, nanos: I64 val): Instant val =>
     if (seconds != 0) or (nanos != 0) then
       Instant.from_duration(_duration.add_seconds_and_nanos(seconds, nanos))
     else
