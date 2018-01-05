@@ -17,6 +17,15 @@ class val Duration is (Equatable[Duration] & Stringable)
       _nanos = nanos_adjustment.u32() * NanosPerMilli().u32()
     end
 
+  new val _create(seconds: I32, nanos: I64) =>
+    if nanos >= 0 then
+      _seconds = seconds
+      _nanos = (nanos % NanosPerSecond().i64()).u32()
+    else
+      _seconds = seconds - 1
+      _nanos = (NanosPerSecond().i64() + (nanos % NanosPerSecond().i64())).u32()
+    end
+
   fun get_seconds(): I32 val =>
     _seconds
 
@@ -34,36 +43,23 @@ class val Duration is (Equatable[Duration] & Stringable)
         millis + nanos_in_millis
     end
 
-  fun add(that: Duration val): Duration val =>
+  fun val add(that: Duration val): Duration val =>
     add_seconds_and_nanos(that.get_seconds(), that.get_nanos().i64())
 
-  fun sub(that: Duration val): Duration val =>
+  fun val sub(that: Duration val): Duration val =>
     sub_seconds_and_nanos(that.get_seconds(), that.get_nanos().i64())
 
-  fun sub_seconds_and_nanos(seconds: I32, nanos: I64): Duration val =>
+  fun val sub_seconds_and_nanos(seconds: I32, nanos: I64): Duration val =>
     add_seconds_and_nanos(-1 * seconds, -1 * nanos)
 
-  fun add_seconds_and_nanos(seconds: I32, nanos: I64): Duration val =>
-    if (seconds == 0) and (nanos == 0) then
-      // TODO just return this
-      Duration(
-          get_seconds(),
-          get_nanos()
-        )
+  fun val add_seconds_and_nanos(seconds: I32, nanos: I64): Duration val =>
+    if (seconds != 0) or (nanos != 0) then
+      let nanos_sum = get_nanos().i64() + nanos
+      let seconds_in_nanos = nanos_sum / NanosPerSecond().i64()
+      let seconds_sum = get_seconds().i64() + seconds.i64() + seconds_in_nanos
+      Duration._create(seconds_sum.i32(), nanos_sum)
     else
-      let nanos_sum: I64 = get_nanos().i64() + nanos
-      let seconds_in_nanos: I64 = nanos_sum / NanosPerSecond().i64()
-      if nanos_sum < 0 then
-          Duration(
-            (get_seconds().i64() + seconds.i64() + (seconds_in_nanos.i64() - 1)).i32(),
-            (NanosPerSecond().i64() + (nanos_sum % NanosPerSecond().i64())).u32()
-          )
-        else
-          Duration(
-            get_seconds() + seconds + seconds_in_nanos.i32(),
-            (nanos_sum % NanosPerSecond().i64()).u32()
-          )
-      end
+      this
     end
 
   fun box eq(that: Duration box): Bool val =>

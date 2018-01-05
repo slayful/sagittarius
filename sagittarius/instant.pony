@@ -30,17 +30,21 @@ class val Instant is (Equatable[Instant] & Stringable)
   fun to_millis(): I64 val =>
     _duration.to_millis()
 
-  fun add(duration: Duration val): Instant val =>
-      Instant.from_duration(_duration.add(duration))
-
-  fun add_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
+  fun val add_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
+    if (seconds != 0) or (nanos != 0) then
       Instant.from_duration(_duration.add_seconds_and_nanos(seconds, nanos))
+    else
+      this
+    end
 
-  fun sub(duration: Duration val): Instant val =>
-    Instant.from_duration(_duration.sub(duration))
+  fun val add(duration: Duration val): Instant val =>
+    add_seconds_and_nanos(duration.get_seconds(), duration.get_nanos().i64())
 
-  fun sub_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
-    Instant.from_duration(_duration.add_seconds_and_nanos(seconds, nanos))
+  fun val sub(duration: Duration val): Instant val =>
+    add_seconds_and_nanos(-duration.get_seconds(), -duration.get_nanos().i64())
+
+  fun val sub_seconds_and_nanos(seconds: I32, nanos: I64): Instant val =>
+    add_seconds_and_nanos(-seconds, -nanos)
 
   fun box eq(that: Instant box): Bool val =>
     (this.get_seconds() == that.get_seconds())
