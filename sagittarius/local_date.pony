@@ -6,6 +6,11 @@ class val LocalDate is (Equatable[LocalDate] & Stringable)
   let _months: I32 val
   let _days: I32 val
 
+  new val create(years: I32 val, months: I32 val, days: I32 val) =>
+    _years = years
+    _months = months
+    _days = days
+
   new val from_epoch_day(days: I64) =>
     var zeroDay = DaysSinceEpoch().i64() + days
     // adjust to 0000-03-01 so leap day is at end of four year cycle
@@ -47,11 +52,6 @@ class val LocalDate is (Equatable[LocalDate] & Stringable)
     let z = year_estimate / 100
     let w = year_estimate / 400
     zero_day - (((x + y) - z) + w)
-
-  new val create(years: I32 val, months: I32 val, days: I32 val) =>
-    _years = years
-    _months = months
-    _days = days
 
   fun get_years(): I32 =>
     _years
