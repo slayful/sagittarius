@@ -23,7 +23,7 @@ class val LocalDateTime is (Equatable[LocalDateTime] & Stringable)
     _date = d._1
     _time = d._2
 
-  new val from_epoch_seconds(seconds: I64, nanos: U32) =>
+  new val from_epoch_seconds(seconds: I64 = 0, nanos: U32 = 0) =>
     let d = S.create_date_and_time(seconds, nanos)
     _date = d._1
     _time = d._2

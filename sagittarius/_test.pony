@@ -75,8 +75,50 @@ class iso _TestLocalDateTime is UnitTest
     h.assert_eq[I32](0, zero_millis.get_nanos())
     h.assert_eq[String]("1970-01-01T00:00:00.000", zero_millis.string())
 
-    h.assert_eq[String]("1970-01-01T00:00:00.001", LocalDateTime.from_millis(1).string())
-    h.assert_eq[String]("1970-01-01T00:00:00.100", LocalDateTime.from_millis(100).string())
-    h.assert_eq[String]("1970-01-01T00:00:01.000", LocalDateTime.from_millis(MillisPerSecond().i64()).string())
-    h.assert_eq[String]("1970-01-01T00:01:00.000", LocalDateTime.from_millis(MillisPerMinute().i64()).string())
-    h.assert_eq[String]("1970-01-01T01:00:00.000", LocalDateTime.from_millis(MillisPerHour().i64()).string())
+    h.assert_eq[String](
+      "1970-01-01T00:00:00.001",
+      LocalDateTime.from_millis(1).string())
+    h.assert_eq[String](
+      "1970-01-01T00:00:00.100",
+      LocalDateTime.from_millis(100).string())
+    h.assert_eq[String](
+      "1970-01-01T00:00:01.000",
+      LocalDateTime.from_millis(MillisPerSecond().i64()).string())
+    h.assert_eq[String](
+      "1970-01-01T00:01:00.000",
+      LocalDateTime.from_millis(MillisPerMinute().i64()).string())
+    h.assert_eq[String](
+      "1970-01-01T01:00:00.000",
+      LocalDateTime.from_millis(MillisPerHour().i64()).string())
+    h.assert_eq[String](
+      "1970-01-01T01:01:01.101",
+      LocalDateTime
+        .from_millis(
+          MillisPerHour().i64() +
+          MillisPerMinute().i64() +
+          MillisPerSecond().i64() +
+          100 +
+          1)
+        .string()
+      )
+
+    h.assert_eq[String](
+      "1970-01-02T00:00:00.000",
+      LocalDateTime.from_epoch_seconds(SecondsPerDay().i64()).string()
+    )
+    h.assert_eq[String](
+      "1970-01-03T00:00:00.000",
+      LocalDateTime.from_epoch_seconds(SecondsPerDay().i64() * 2).string()
+    )
+    h.assert_eq[String](
+      "1971-01-01T00:00:00.000",
+      LocalDateTime.from_epoch_seconds(SecondsPerDay().i64() * 365).string()
+    )
+    h.assert_eq[String](
+      "1969-01-01T00:00:00.000",
+      LocalDateTime.from_epoch_seconds(SecondsPerDay().i64() * -365).string()
+    )
+    h.assert_eq[String](
+      "2018-01-05T10:47:15.000",
+      LocalDateTime.from_epoch_seconds(1515149235).string()
+    )
