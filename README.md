@@ -2,6 +2,11 @@
 
 An attempt at implementing a date and time library for pony as suggested in this [ponyc issue](https://github.com/ponylang/ponyc/issues/1902#issuecomment-302221252).
 
+## Status
+[![Build Status](https://travis-ci.org/slayful/sagittarius.svg?branch=master)](https://travis-ci.org/slayful/sagittarius)
+
+Early Alpha version looking for early adopters and feedback to guide the development process.
+
 ## Inspirations
 - https://docs.rs/chrono/0.3.1/chrono/
 - https://github.com/rust-lang/rust-wiki-backup/blob/master/Lib-datetime.md
@@ -25,11 +30,6 @@ Time -> chrono -> [Chronos](https://en.wikipedia.org/wiki/Chronos) ->  as a man 
 1. Parsing and formatting ISO
 
 Pony standard library interoperability
-
-## Status
-[![Build Status](https://travis-ci.org/slayful/sagittarius.svg?branch=master)](https://travis-ci.org/slayful/sagittarius)
-
-WORK IN PROGRESS
 
 ## Installation
 
