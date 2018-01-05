@@ -1,20 +1,3 @@
-# Library Project Starter Usage
-
-The contents of this repo are designed to get you up and running with everything you need to start writing your excellent Pony library. If you copy all the contents of this repo into your new project you'll get:
-
-- A Makefile to automate building and testing
-- TravisCI setup (more actions will be required)
-  * Build and test your project on each PR against most recent Pony release
-  * Support for a daily cron job to test your project against bleeding-edge Pony master.
-- Basic `.gitignore`
-- Contribution guide that matches Pony's.
-- Code of Conduct that matches Pony's.
-- Style Guide that matches Pony's.
-- README including:
-  * TravisCI status badge
-  * Project status
-  * How to install using pony-stable
-
 You still need to add:
 
 - A License
