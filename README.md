@@ -14,10 +14,10 @@ Time -> chrono -> [Chronos](https://en.wikipedia.org/wiki/Chronos) ->  as a man 
 1. Durations
 1. Periods
 1. Instant
-1. Duration Fields
 1. Intervals
+1. LocalDate, LocalTime and LocalDateTime
 1. Chronology
-- calculating year
+1. Duration Fields
 1. LocalDateTime
 1. TimeZone
 1. DateTime

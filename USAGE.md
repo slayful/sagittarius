@@ -1,7 +1,6 @@
 You still need to add:
 
 - A License
-- A directory at the root of the project containing your Pony source code
 
 ## It's opinionated
 
